@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUserPlus, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import './LandingPage.css';
@@ -34,7 +34,8 @@ const LandingPage = () => {
         <div className="option">
           <FontAwesomeIcon icon={faUserSecret} className="icon" />
           <h2>Continue as Guest</h2>
-          <button className="btn" onClick={() => alert('Continue as Guest')}>
+          {/* Updated to navigate to the /guest route */}
+          <button className="btn" onClick={() => navigate('/guest')}>
             Continue
           </button>
         </div>

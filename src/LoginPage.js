@@ -181,7 +181,7 @@ const LoginPage = () => {
       // window.location.href = '/dashboard'; // Uncomment this line if you want to redirect
 
       console.log('JWT Token saved to sessionStorage:', token); // Log token for debugging
-
+      window.location.href = '/booking-options'; 
       // Clear message
       setMessage('');
     } catch (error) {
