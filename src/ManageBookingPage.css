@@ -1,0 +1,92 @@
+/* General Manage Booking Page styles */
+.manage-booking {
+    position: relative;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: url('C:/Users/Riddhi/Desktop/ReactJs/UI-movie_theatre/src/assets/theatre-background.jpg') no-repeat center center fixed; /* Updated path */
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Semi-transparent overlay for readability */
+.manage-booking::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7); /* Semi-transparent white overlay */
+    z-index: 1;
+}
+
+.header, .main-content {
+    position: relative;
+    z-index: 2; /* Position content above the overlay */
+}
+
+.header h1 {
+    font-size: 3rem; /* Large font size for page title */
+    font-weight: bold;
+    color: black; /* Ensure the text color is black */
+    text-align: center;
+    margin-bottom: 20px; /* Add spacing below */
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin: 40px;
+}
+
+.manage-option {
+    border: 1px solid #ddd;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 40px;
+    width: 300px;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.manage-option:hover {
+    box-shadow: 0px 4px 20px rgba(179, 34, 34, 0.593);
+}
+
+.manage-option h2 {
+    color: #444;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.manage-option .btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.manage-option .btn:hover {
+    background-color: #0056b3;
+}
+
+.footer {
+    margin-top: 40px;
+    padding: 10px;
+    background: #333;
+    color: #fff;
+    text-align: center;
+}
