@@ -1,0 +1,75 @@
+.payment-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: url('C:/Users/Khushi/Desktop/ReactJs/acmeplex/src/assets/theatre-background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: black;
+  font-family: Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.payment-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7); /* Increased transparency for a lighter effect */
+  z-index: 0;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+p {
+  color: black; /* Ensure these lines are black */
+  font-size: 18px;
+  margin: 10px 0;
+  z-index: 1;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 300px;
+  background: rgba(0, 0, 0, 0.6); /* Keep the form background dark for contrast */
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+input {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

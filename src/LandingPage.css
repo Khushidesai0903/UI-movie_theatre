@@ -1,0 +1,116 @@
+/* General landing page styles */
+.landing-page {
+  position: relative;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background: url('C:/Users/Khushi/Desktop/ReactJs/acmeplex/src/assets/theatre-background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Semi-transparent overlay for readability */
+.landing-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7); /* Semi-transparent white overlay */
+  z-index: 1;
+}
+
+.header, .main-options, .footer {
+  position: relative;
+  z-index: 2; /* Position content above the overlay */
+}
+
+/* Header Styling */
+.header h1 {
+  font-size: 3rem; /* Increased font size for "Welcome to AcmePlex" */
+  font-weight: bold; /* Make the text bold */
+  color: black; /* Ensure the text color is black */
+  text-align: center;
+  margin-bottom: 20px; /* Add spacing below */
+}
+
+.header p {
+  font-size: 1.5rem; /* Slightly larger font size for subtitle */
+  color: black; /* Ensure the text color is black */
+}
+
+/* Main Options Styling */
+.main-options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 40px;
+}
+
+.option {
+  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.9); /* Light background for readability */
+  border-radius: 10px;
+  padding: 20px;
+  width: 200px;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.option:hover {
+  box-shadow: 0px 4px 15px rgba(179, 34, 34, 0.593);
+}
+
+.icon {
+  color: #007bff;
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  color: #444;
+}
+
+/* Apply white color to text in header, footer, and other elements */
+.header, .header h1, .header p,
+.footer p {
+  color: white;  /* White color for header and footer text */
+}
+
+/* Target the text above buttons and set it to black */
+.main-options .option h3,  /* Heading above button */
+.main-options .option p {  /* Text paragraph above button */
+  color: black;  /* Set this text color to black */
+}
+
+.header h1, .header p {
+  color: black; /* Ensures the "Welcome to AcmePlex" and "Your destination for an exceptional movie experience" texts are black */
+}
+
+/* Button Styles */
+.btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/* Footer Styles */
+.footer {
+  margin-top: 40px;
+  padding: 10px;
+  background: #333;
+  color: #fff;
+}

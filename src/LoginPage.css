@@ -1,0 +1,81 @@
+/* src/LoginPage.css */
+
+/* Inherit background from LandingPage */
+.login-page {
+  position: relative;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background: url('C:/Users/Khushi/Desktop/ReactJs/acmeplex/src/assets/theatre-background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Semi-transparent overlay for readability */
+.login-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 1;
+}
+
+/* Form container */
+.login-form {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 20px 30px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Apply white color to header and paragraph in login form */
+.login-form h2,
+.login-form p {
+  color: white;  /* Make the login form header and text white */
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.login-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.login-form .btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-form .btn:hover {
+  background-color: #0056b3;
+}
+
