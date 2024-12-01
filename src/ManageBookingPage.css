@@ -1,9 +1,8 @@
-/* General Manage Booking Page styles */
 .manage-booking {
     position: relative;
     text-align: center;
     font-family: Arial, sans-serif;
-    background: url('C:/Users/Riddhi/Desktop/ReactJs/UI-movie_theatre/src/assets/theatre-background.jpg') no-repeat center center fixed; /* Updated path */
+    background: url('C:/Users/Khushi/Desktop/ReactJs/UI-movie_theatre/src/assets/theatre-background.jpg') no-repeat center center fixed; /* Updated path */
     background-size: cover;
     min-height: 100vh;
     display: flex;
@@ -12,7 +11,6 @@
     align-items: center;
 }
 
-/* Semi-transparent overlay for readability */
 .manage-booking::before {
     content: '';
     position: absolute;
@@ -20,21 +18,21 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.7); /* Semi-transparent white overlay */
+    background: rgba(255, 255, 255, 0.7); 
     z-index: 1;
 }
 
 .header, .main-content {
     position: relative;
-    z-index: 2; /* Position content above the overlay */
+    z-index: 2; 
 }
 
 .header h1 {
-    font-size: 3rem; /* Large font size for page title */
+    font-size: 3rem; 
     font-weight: bold;
-    color: black; /* Ensure the text color is black */
+    color: black; 
     text-align: center;
-    margin-bottom: 20px; /* Add spacing below */
+    margin-bottom: 20px; 
 }
 
 .main-content {
@@ -89,4 +87,25 @@
     background: #333;
     color: #fff;
     text-align: center;
+}
+.booking-list {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    width: 80%;
+    max-width: 600px;
+}
+
+.booking-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.message {
+    font-size: 1.2rem;
+    color: #007bff;
+    margin: 10px 0;
 }

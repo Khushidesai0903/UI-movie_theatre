@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './SignUpPage.css'; // Use existing CSS for styling
+import './SignUpPage.css'; 
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; 
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -8,19 +9,18 @@ const SignUpPage = () => {
     email: '',
     password: '',
     address: '',
-    annualFeesPaid: false, // Checkbox for annual fee
-    paymentMethod: '', // Debit or Credit selection
+    annualFeesPaid: false, 
+    paymentMethod: '', 
     cardNumber: '',
     expiryDate: '',
     cvv: '',
-    cardType: '', // New field for card type (e.g., Visa, MasterCard)
+    cardType: '', 
   });
 
-  const [message, setMessage] = useState(''); // For form success or error messages
-  const [paymentMessage, setPaymentMessage] = useState(''); // For payment success or error messages
-  const [paymentSubmitted, setPaymentSubmitted] = useState(false); // Track payment submission
+  const [message, setMessage] = useState(''); 
 
-  // Handle input change
+  const navigate = useNavigate(); 
+
   const handleInputChange = (e) => {
     const { id, value, type, checked } = e.target;
     setFormData((prevData) => ({
@@ -29,23 +29,16 @@ const SignUpPage = () => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent page reload
+    e.preventDefault(); 
 
-    // Validate payment if annual fee is selected
     if (formData.annualFeesPaid) {
-      if (!paymentSubmitted) {
-        setMessage('Please submit the payment first.');
-        return;
-      }
       if (!formData.cardNumber || !formData.expiryDate) {
         setMessage('Please provide complete payment details.');
         return;
       }
     }
 
-    // Prepare payload for registration
     const payload = {
       user: {
         name: formData.name,
@@ -60,35 +53,26 @@ const SignUpPage = () => {
             cardType: formData.cardType,
             paymentMethod: formData.paymentMethod,
           }
-        : null, // Include card details only if annual fee is paid
+        : null, 
     };
 
     try {
       console.log(payload);
       const response = await axios.post('http://localhost:8080/auth/register', payload);
       if (response.status === 200 || response.status === 201) {
-        setMessage('Registration successful!');
+        alert('Registration successful!');
+        setTimeout(() => {
+          navigate('/login'); 
+        }, 2000);
       } else {
         setMessage('Registration failed. Please try again.');
       }
     } catch (error) {
-      setMessage('Error: Unable to register. Please check your inputs or try again later.');
+      alert('Already registered. Please log in.'); 
+      setTimeout(() => {
+        navigate('/login'); 
+      }, 2000); 
     }
-  };
-
-  // Handle payment submission
-  const handlePaymentSubmit = () => {
-    if (!formData.paymentMethod) {
-      setPaymentMessage('Please select a payment method.');
-      return;
-    }
-    if (!formData.cardNumber || !formData.expiryDate || !formData.cvv) {
-      setPaymentMessage('Please provide complete payment details.');
-      return;
-    }
-
-    setPaymentMessage('Payment Successful! Thank you for paying the $20 annual fee.');
-    setPaymentSubmitted(true);
   };
 
   return (
@@ -107,6 +91,7 @@ const SignUpPage = () => {
               placeholder="Enter your name"
               value={formData.name}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -117,6 +102,7 @@ const SignUpPage = () => {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -127,6 +113,7 @@ const SignUpPage = () => {
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -137,6 +124,7 @@ const SignUpPage = () => {
               placeholder="Enter your address"
               value={formData.address}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="form-group checkbox-group">
@@ -204,22 +192,13 @@ const SignUpPage = () => {
                   onChange={handleInputChange}
                 />
               </div>
-              <button
-                type="button"
-                className="btn"
-                onClick={handlePaymentSubmit}
-                disabled={paymentSubmitted} // Disable button if payment is already submitted
-              >
-                Submit Payment
-              </button>
-              {paymentMessage && <p>{paymentMessage}</p>}
             </>
           )}
           <button type="submit" className="btn">
             Sign Up
           </button>
         </form>
-        {message && <p>{message}</p>}
+        {message && <p style={{ color: 'black' }}>{message}</p>}
       </div>
     </div>
   );

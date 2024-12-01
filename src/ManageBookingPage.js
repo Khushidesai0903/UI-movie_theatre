@@ -1,55 +1,146 @@
-import React, { useState } from 'react';
-import './ManageBookingPage.css'; // Import the CSS file for styles
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import './ManageBookingPage.css'; 
 
 const ManageBookingPage = () => {
-  const [bookingId, setBookingId] = useState(''); // State to track the booking ID input
-  const [isCancelAllowed, setIsCancelAllowed] = useState(true); // State to track if cancellation is allowed
-  const [isRegisteredUser, setIsRegisteredUser] = useState(true); // State to track if the user is registered
-  const [adminFeePercentage] = useState(15); // Default to 15% admin fee for non-registered users
+  const [bookings, setBookings] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [message, setMessage] = useState(''); 
 
-  // Function to handle booking cancellation
-  const handleCancelBooking = () => {
-    if (isCancelAllowed) {
-      // Simulate cancellation logic
-      alert('Your booking has been canceled successfully!');
-    } else {
-      alert('You cannot cancel your booking at this time.');
+  const navigate = useNavigate(); 
+  const fetchBookings = async () => {
+    try {
+      setLoading(true); 
+      const token = sessionStorage.getItem('authToken'); 
+
+      if (!token) {
+        setMessage('You need to log in to view bookings.');
+        setLoading(false);
+        return;
+      }
+      const response = await fetch('http://localhost:8080/v1/reservations/user', {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setMessage(errorData.message || 'Failed to fetch bookings. Please try again later.');
+        setLoading(false);
+        return;
+      }
+
+      const data = await response.json(); 
+      console.log('Fetched Data:', data); 
+
+      if (Array.isArray(data) && data.length > 0) {
+        setBookings(data); 
+      } else {
+        setMessage('No bookings found. Please make a booking first.');
+      }
+
+      setLoading(false); 
+    } catch (error) {
+      console.error('Error fetching bookings:', error.message);
+      setMessage(error.message);
+      setLoading(false); 
     }
   };
+  const cancelBooking = async (reservationId) => {
+    try {
+      const token = sessionStorage.getItem('authToken'); 
+      if (!token) {
+        setMessage('You need to log in to cancel bookings.');
+        return;
+      }
+      const response = await fetch(`http://localhost:8080/v1/reservations/cancel/${reservationId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      });
+
+      console.log('Cancel Booking Response:', response); 
+
+      if (!response.ok) {
+        const errorData = await response.json(); 
+        setMessage(errorData.message || 'Failed to cancel booking. Please try again.');
+        return;
+      }
+
+      const data = await response.json();
+      console.log('Cancel Booking Data:', data);
+
+      if (data.success) {
+        setMessage(data.message || 'Booking cancelled successfully.');
+        setBookings((prevBookings) => prevBookings.filter((b) => b.reservationId !== reservationId));
+      } else {
+        setMessage(data.message || 'Failed to cancel booking. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error canceling booking:', error.message);
+      setMessage(error.message); 
+    }
+  };
+
+  const goToBookingPage = () => {
+    navigate('/booking-options'); 
+  };
+
+  useEffect(() => {
+    fetchBookings();
+  }, []); 
 
   return (
     <div className="manage-booking">
       <div className="header">
-        <h1>Manage Your Booking</h1>
+        <h1>Manage Your Bookings</h1>
       </div>
 
       <div className="main-content">
-        <div>
-          <label htmlFor="booking-id">Booking ID:</label>
-          <input
-            type="text"
-            id="booking-id"
-            value={bookingId}
-            onChange={(e) => setBookingId(e.target.value)} // Handle input change for booking ID
-            placeholder="Enter your booking ID"
-          />
-        </div>
+        {loading ? (
+          <p>Loading...</p> 
+        ) : (
+          <>
+            {message && <p className="message">{message}</p>} {/* Show any feedback message */}
 
-        <div>
-          <button onClick={handleCancelBooking} className="btn">Cancel Booking</button>
-        </div>
-
-        <div>
-          <h3>Cancellation Information</h3>
-          <p>
-            {isRegisteredUser
-              ? `As a registered user, no admin fee will be applied.`
-              : `A ${adminFeePercentage}% admin fee will apply for cancellations.`}
-          </p>
-          <p>{isCancelAllowed ? "You can cancel your booking within 72 hours." : "You cannot cancel this booking."}</p>
-        </div>
+            {bookings.length > 0 ? (
+              bookings.map((booking) => {
+                console.log('Booking Object:', booking);
+                return (
+                  <div key={booking.reservationId || booking.id || booking.bookingId} className="booking-item">
+                    <h3>Booking ID: {booking.reservationId || booking.id || booking.bookingId || 'Unknown'}</h3>
+                    <p>Movie Name: {booking.movieName || 'Unknown'}</p>
+                    <p>
+                      Show Time:{' '}
+                      {booking.showTime
+                        ? new Date(booking.showTime).toLocaleString()
+                        : 'Invalid Date'}
+                    </p>
+                    <p>Seat Number: {booking.seatNumber || 'N/A'}</p>
+                    <button
+                      className="btn cancel-btn"
+                      onClick={() => cancelBooking(booking.reservationId || booking.id || booking.bookingId)}
+                    >
+                      Cancel Booking
+                    </button>
+                  </div>
+                );
+              })
+            ) : (
+              <p>No bookings found. Please make a booking first.</p> 
+            )}
+          </>
+          
+        )}
+        <div className="back-button">
+        <button className="btn" onClick={goToBookingPage}>
+          Back to Booking Options
+        </button>
       </div>
-
+      </div>
+      
       <div className="footer">
         <p>&copy; 2024 AcmePlex. All Rights Reserved.</p>
       </div>

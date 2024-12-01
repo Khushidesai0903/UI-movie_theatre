@@ -1,20 +1,16 @@
-/* src/SignUpPage.css */
-
-/* Inherit background from LandingPage */
 .signup-page {
   position: relative;
   text-align: center;
   font-family: Arial, sans-serif;
-  background: url('C:\Users\Riddhi\Desktop\ReactJs\UI-movie_theatre\src\assets\theatre-background.jpg') no-repeat center center fixed;
+  background: url('C:/Users/Khushi/Desktop/ReactJs/UI-movie_theatre/src/assets/theatre-background.jpg') no-repeat center center fixed;
   background-size: cover;
   min-height: 100vh;
   display: flex;
-  flex-direction: column; /* Stack header and form vertically */
+  flex-direction: column; 
   justify-content: center;
   align-items: center;
 }
 
-/* Semi-transparent overlay for readability */
 .signup-page::before {
   content: '';
   position: absolute;
@@ -26,7 +22,6 @@
   z-index: 1;
 }
 
-/* Header styling */
 .header {
   position: relative;
   z-index: 2;
@@ -45,7 +40,6 @@
   color: #555;
 }
 
-/* Form container */
 .signup-form {
   position: relative;
   z-index: 2;
@@ -63,10 +57,9 @@
   color: #333;
 }
 
-/* Apply white color to header and paragraph in signup form */
 .signup-form h2,
 .signup-form p {
-  color: white; /* Make the signup form header and text white */
+  color: white; 
 }
 
 .signup-form input {

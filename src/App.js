@@ -6,8 +6,8 @@ import SignUpPage from './SignUpPage';
 import GuestPage from './GuestPage'; 
 import SeatSelectionPage from './SeatSelectionPage';
 import PaymentPage from './PaymentPage';
-import BookingOptionsPage from './BookingOptionsPage'; // Import the BookingOptionsPage
-import ManageBookingPage from './ManageBookingPage'; // Import the ManageBookingPage
+import BookingOptionsPage from './BookingOptionsPage'; 
+import ManageBookingPage from './ManageBookingPage'; 
 
 function App() {
   const [selectedSeats, setSelectedSeats] = useState([]);

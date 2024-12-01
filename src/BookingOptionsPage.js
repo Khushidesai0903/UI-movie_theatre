@@ -1,24 +1,31 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './BookingOptionsPage.css'; // Import the CSS file
+import './BookingOptionsPage.css'; 
 
 const BookingOptionsPage = () => {
   const navigate = useNavigate();
 
-  // Handle Book Tickets button click
   const handleBookTickets = () => {
-    navigate('/select-seats'); // Redirect to Seat Selection page
+    navigate('/select-seats'); 
   };
 
-  // Handle Manage Booking button click
   const handleManageBooking = () => {
-    navigate('/manage-booking'); // Redirect to Manage Booking page
+    navigate('/manage-booking'); 
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('token'); 
+    navigate('/login'); 
   };
 
   return (
     <div className="booking-options">
       <div className="header">
         <h1>Choose an Option</h1>
+        {/* Logout Button */}
+        <button className="btn-logout" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
 
       <div className="main-options">

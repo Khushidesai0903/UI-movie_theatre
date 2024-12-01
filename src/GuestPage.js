@@ -1,53 +1,65 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './GuestPage.css'; // Styling for GuestPage
-import axios from 'axios'; // Import axios for backend requests
+import './GuestPage.css';
+import { useNavigate } from 'react-router-dom'; 
 
 const GuestPage = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false); // To show loading state while submitting
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); 
+  const navigate = useNavigate(); 
 
   const handleGuestAccess = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
 
     if (!email) {
       setMessage('Please enter a valid email address.');
       return;
     }
 
-    setLoading(true); // Start loading
+    setLoading(true); 
 
     try {
-      // Backend call to store guest email
-      const response = await axios.post('http://localhost:8080/guest/track', { email });
-      
-      if (response.status === 200) {
-        // Assuming backend responds with a success status
-        setMessage('Successfully logged in as guest!');
-        
-        // Store the email in sessionStorage for tracking
-        sessionStorage.setItem('guestEmail', email);
+      const response = await fetch('http://localhost:8080/auth/guest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
 
-        // Redirect to SeatSelectionPage
-        navigate('/select-seats');
-      } else {
-        setMessage('Error occurred. Please try again.');
+      if (!response.ok) {
+        if (response.status === 400) {
+          alert('User is already registered. Please log in');
+          setTimeout(() => {
+            navigate('/login'); 
+          }, 2000); 
+        } else {
+          throw new Error('Something went wrong, please try again.');
+        }
       }
+
+      else {const token = await response.text(); 
+
+      sessionStorage.setItem('authToken', token);
+
+      console.log('JWT Token saved to sessionStorage:', token); 
+      window.location.href = '/booking-options';
+      } 
+
+      setMessage('');
     } catch (error) {
+      setMessage(error.message);
       console.error('Error:', error);
-      setMessage('Error occurred. Please try again.');
     } finally {
-      setLoading(false); // End loading
+      setLoading(false); 
     }
   };
 
   return (
-    <div className="guest-page">
+    <div className="landing-page">
       <header className="header">
         <h1>Continue as Guest</h1>
-        <p>Enter your email to continue as a guest and access seat booking.</p>
+        <p>Please enter your email to continue as a guest and access seat booking.</p>
       </header>
 
       <main className="main-options">
@@ -60,6 +72,7 @@ const GuestPage = () => {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
               style={{
                 padding: '10px',
                 margin: '10px 0',
